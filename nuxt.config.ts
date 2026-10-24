@@ -117,7 +117,12 @@ export default defineNuxtConfig({
       }
     ],
     langDir: 'locales/',
-    detectBrowserLanguage: false,
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      alwaysRedirect: false,
+      fallbackLocale: 'en',
+    },
     experimental: {
       strictSeo: true
     }
