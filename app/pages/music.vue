@@ -525,7 +525,7 @@ onBeforeUnmount(() => {
     />
 
     <!-- Main area: track list + player panel -->
-    <div class="relative z-[3] flex flex-1 min-h-0 mt-10 mx-15 max-sm:flex-col max-sm:mt-0 max-sm:mx-0 max-sm:z-auto">
+    <div class="relative z-[3] flex flex-1 min-h-0 mt-16 mx-15 max-sm:flex-col max-sm:mt-0 max-sm:mx-0 max-sm:z-auto">
       <MusicTrackList
         :tracks="tracks ?? []"
         :current-index="currentIndex"

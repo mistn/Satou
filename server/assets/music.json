@@ -6,14 +6,16 @@
       "artist": "Nanawo Akari",
       "slug": "one-room-sugar-life",
       "format": "mp3",
-      "cover": true
+      "cover": true,
+      "lrc": true
     },
     {
       "name": "SWEET HURT",
       "artist": "ReoNa",
       "slug": "sweet-hurt",
       "format": "m4a",
-      "cover": true
+      "cover": true,
+      "lrc": true
     }
   ]
 }
