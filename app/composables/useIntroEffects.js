@@ -8,7 +8,6 @@ import { onMounted } from 'vue'
  * it drove — the page no longer scrolls, so every branch was a no-op.
  */
 export function useIntroEffects() {
-  const { locale, setLocale } = useI18n()
 
   // ── Console status badge ───────────────────────────────────────────────────
   const logStatus = (message, { isError = false } = {}) => {
@@ -100,11 +99,6 @@ export function useIntroEffects() {
     } catch (err) {
       logStatus(`Error: ${err.message}`, { isError: true })
       console.error(err.stack)
-    }
-
-    const savedLocale = document.cookie.match(/i18n_redirected=([^;]+)/)?.[1]
-    if (savedLocale && savedLocale !== locale.value) {
-      setLocale(savedLocale)
     }
   })
 }
