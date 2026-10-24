@@ -1,0 +1,12 @@
+{
+  "notice": {
+    "updated": "更新于 {date}",
+    "body": "",
+    "apology": "",
+    "close": "关闭公告"
+  },
+  "hero": {
+    "name": "松坂砂糖",
+    "get_in_touch": "认识一下~"
+  }
+}

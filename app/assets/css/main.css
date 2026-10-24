@@ -1,0 +1,281 @@
+:root {
+  --bg-primary: #010101;
+  --content-1: #ffffff0d;
+  --content-2: #ffffff1f;
+  --content-1-hover: #ffffff14;
+  --content-2-hover: #ffffff26;
+  --text-primary: white;
+  --text-secondary: #8b949e;
+  --text-tertiary: #484f58;
+  /* --accent-primary: #00d9ff; */
+  --accent-primary: #e9a0ff;
+  --accent-secondary: #00b8d4;
+  --accent-tertiary: #a78bfa;
+  /* --color-cyan: #00d9ff; */
+  --color-magenta: #d282e6;
+  --color-purple: #a78bfa;
+  --color-gray-400: #8b949e;
+  --color-gray-500: #6e7681;
+  --color-gray-600: #484f58;
+  --color-gray-800: #30363d;
+  --color-black: #010409;
+  --border-color-1: #ffffff14;
+  --border-color-2: #ffffff4d;
+  --grid-color: #ffffff0d;
+  --gradient-mesh: radial-gradient(
+    ellipse 90% 40% at 50% 100%,
+    #bf80da40,
+    transparent 70%
+  );
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 2rem;
+  --radius-full: 9999px;
+  --shadow-sm: 0 2px 8px #0000004d;
+  --shadow-md: 0 4px 16px #0006;
+  --shadow-lg: 0 8px 32px #00000080;
+  --shadow-glow: 0 0 40px #ffffff4d;
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Google Sans Flex", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+@supports (color: lab(0% 0 0)) {
+  :root {
+    --gradient-mesh: radial-gradient(
+      ellipse 90% 40% at 50% 100%,
+      lab(62.811% 36.783 -37.130 / 0.25),
+      transparent 70%
+    );
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+* Base layout — html / body grid background and fixed background mesh
+* ──────────────────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  background-image:
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  background-color: var(--bg-primary);
+  font-size: 16px;
+  overflow-x: clip;
+}
+
+body {
+  background-image: var(--gradient-mesh);
+  color: var(--text-primary);
+  background-size: cover;
+  background-attachment: fixed;
+  min-width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+h1 {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.8;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+* 名字（松坂砂糖）专用的日文字体。
+* Google Sans Code 没有 CJK 字形，不回退的话会掉进系统默认中文字体（雅黑/苹方），
+* 和旁边的等宽拉丁字形成断层。这里用 Zen Kaku Gothic New 900，
+* 并在 nuxt.config.ts 里用 `text=` 只子集这四个字（约 1.5KB）。
+* ──────────────────────────────────────────────────────────────────────────── */
+.name-cjk {
+  font-family: "Zen Kaku Gothic New", "Google Sans Code", ui-monospace, monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+* The reusable rounded "home" call-to-action button used in the hero.
+* Works on both <button> and <a>/<NuxtLink>: `<button class="home …">` /
+* `<NuxtLink class="home …">`
+* ──────────────────────────────────────────────────────────────────────────── */
+.home {
+  background: var(--content-2);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: 2px solid #0000;
+  padding: 0.6rem 1.2rem;
+  font-family: inherit;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 文本是 flex item，不加这句会在窄屏被压缩折行 */
+  white-space: nowrap;
+}
+
+.home:hover {
+  box-shadow: var(--shadow-glow);
+  border-color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.home:active {
+  transform: translateY(0);
+}
+
+.home:focus,
+.home:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 4px;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+* Keyframes + helper animation classes
+* ──────────────────────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  0%  { opacity: 0; transform: translateY(20px); }
+  to  { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  0%  { opacity: 0; transform: translateY(40px); }
+  to  { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  0%  { opacity: 0; scale: 0.9; }
+  to  { opacity: 1; scale: 1; }
+}
+
+@keyframes slideInLeft {
+  0%  { opacity: 0; transform: translate(-40px); }
+  to  { opacity: 1; transform: translate(0); }
+}
+
+@keyframes slideInRight {
+  0%  { opacity: 0; transform: translate(40px); }
+  to  { opacity: 1; transform: translate(0); }
+}
+
+@keyframes cursorFloat {
+  0%, to { transform: translateY(0); }
+  50%    { transform: translateY(-6px); }
+}
+
+@keyframes glow {
+  0%, to { opacity: 0.5; }
+  50%    { opacity: 1; }
+}
+
+@keyframes blink {
+  0%, 49%  { opacity: 0; }
+  50%, to  { opacity: 1; }
+}
+
+.animate-fadeIn {
+  opacity: 0;
+  animation: fadeIn 0.6s var(--transition-smooth) forwards;
+}
+
+.animate-fadeInUp {
+  opacity: 0;
+  animation: fadeInUp 0.8s var(--transition-smooth) forwards;
+}
+
+.animate-blink {
+  animation: 1s step-end infinite blink;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+* Scrollbar + selection
+* ──────────────────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-primary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--text-primary), transparent 80%);
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Page transitions
+ *
+ * "page" name  → home→music navigation (global default)
+ *   leave: home slides up and out
+ *   enter: music slides in from below
+ *
+ * "page-home" name → music→home navigation (defined in index.vue definePageMeta)
+ *   leave: music slides up and out
+ *   enter: (no class defined) → home appears naturally, CSS opening animations run
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+.page-leave-active,
+.page-home-leave-active {
+  transition:
+    opacity 0.2s cubic-bezier(0.95, 0.05, 0.795, 0.035),
+    transform 0.2s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  pointer-events: none;
+}
+
+.page-leave-to,
+.page-home-leave-to {
+  opacity: 0;
+  transform: translateY(-4rem);
+}
+
+.page-enter-active {
+  transition:
+    opacity 0.6s cubic-bezier(0.1, 0.9, 0.2, 1),
+    transform 0.6s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8rem);
+}
+

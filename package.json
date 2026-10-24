@@ -1,0 +1,37 @@
+{
+  "name": "dp-intro-vue",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@11.9.0",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "preview:cf": "wrangler pages dev dist --compatibility-date=2026-07-07",
+    "postinstall": "nuxt prepare",
+    "lint": "node ./node_modules/eslint/bin/eslint.js . --cache",
+    "lint:fix": "node ./node_modules/eslint/bin/eslint.js . --fix --cache"
+  },
+  "dependencies": {
+    "@nuxt/icon": "^2.2.3",
+    "nuxt": "^4.4.8",
+    "vue": "^3.5.33",
+    "vue-router": "^5.0.6"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/mingcute": "^1.2.7",
+    "@iconify-json/simple-icons": "^1.2.86",
+    "@nuxt/eslint": "1.16.0",
+    "@nuxtjs/i18n": "^10.4.0",
+    "@nuxtjs/sitemap": "^8.0.15",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.19",
+    "@vueuse/nuxt": "^14.3.0",
+    "eslint": "^10.4.1",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.4"
+  }
+}

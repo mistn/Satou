@@ -1,0 +1,19 @@
+{
+  "cdnUrl": "/music/",
+  "songs": [
+    {
+      "name": "One Room Sugar Life",
+      "artist": "Nanawo Akari",
+      "slug": "one-room-sugar-life",
+      "format": "mp3",
+      "cover": true
+    },
+    {
+      "name": "SWEET HURT",
+      "artist": "ReoNa",
+      "slug": "sweet-hurt",
+      "format": "m4a",
+      "cover": true
+    }
+  ]
+}

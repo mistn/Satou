@@ -1,0 +1,219 @@
+<script setup lang="ts">
+interface Track {
+  name: string
+  artist: string
+  format: string
+  url: string
+  cover: string
+  lrc: string
+}
+
+const props = defineProps<{
+  tracks: Track[]
+  currentIndex: number
+  isOpen: boolean
+  /** Immersive view: the list leaves the flow and fades out to the left. */
+  collapsed: boolean
+}>()
+
+const emit = defineEmits<{
+  select: [index: number]
+}>()
+
+const listEl = ref<HTMLElement | null>(null)
+// Width frozen at collapse time so the list keeps its layout while fading out
+const frozenWidth = ref<number | null>(null)
+// Suppresses transitions until after the first paint, so a restored collapsed state doesn't animate on load
+const instant = ref(true)
+
+watch(() => props.collapsed, (collapsed) => {
+  // Runs before the DOM update, so offsetWidth is still the in-flow width
+  if (collapsed && listEl.value) frozenWidth.value = listEl.value.offsetWidth
+})
+
+onMounted(() => {
+  requestAnimationFrame(() => requestAnimationFrame(() => { instant.value = false }))
+})
+
+watch(() => props.currentIndex, () => {
+  setTimeout(() => {
+    const list = listEl.value
+    if (!list) return
+    const active = list.querySelector<HTMLElement>('.is-active')
+    if (!active) return
+    list.scrollTo({ top: active.offsetTop - list.offsetTop, behavior: 'smooth' })
+  }, 200)
+}, { flush: 'post' })
+</script>
+
+<template>
+  <div
+    ref="listEl"
+    class="track-list"
+    :class="{ 'is-open': isOpen, 'is-collapsed': collapsed, 'is-instant': instant }"
+    :style="frozenWidth ? { '--list-w': `${frozenWidth}px` } : undefined"
+    :inert="collapsed || undefined"
+  >
+    <p v-if="!tracks.length" class="px-6 py-8 text-[0.9rem] text-white/30">
+      No tracks yet<br>
+      <span class="text-[0.78rem] text-white/20">put audio in music-inbox/ then run tools/music-prep.py</span>
+    </p>
+    <button
+      v-for="(track, i) in tracks"
+      :key="i"
+      class="track-item"
+      :class="{ 'is-active': i === currentIndex }"
+      :style="{ animationDelay: `${100 + i * 40}ms`, animationDuration: `${420 + i * 12}ms` }"
+      @click="emit('select', i)"
+    >
+      <span class="track-num">{{ i + 1 }}</span>
+      <span class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">{{ track.name }}</span>
+      <span class="track-artist">{{ track.artist }}</span>
+    </button>
+  </div>
+</template>
+
+<style scoped>
+.track-list {
+  width: 55%;
+  overflow-y: auto;
+  padding: 0.5rem 1.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.15) transparent;
+  /* Coming back (leaving immersive) waits for the wheel's lyrics to spin out first; MusicPlayerPanel
+     sets --layout-exit-wait on the shared parent from the spin's length. Collapsing (below) starts
+     immediately. */
+  transition:
+    opacity 450ms cubic-bezier(0.32, 0.72, 0, 1) var(--layout-exit-wait, 0ms),
+    transform 800ms cubic-bezier(0.32, 0.72, 0, 1) var(--layout-exit-wait, 0ms),
+    visibility 0s;
+}
+
+/* Out of the flow so the player panel snaps to full width immediately (it FLIPs its own contents) */
+.track-list.is-collapsed {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--list-w, 55%);
+  opacity: 0;
+  transform: translateX(-3rem);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 350ms cubic-bezier(0.32, 0.72, 0, 1),
+    transform 800ms cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s linear 800ms;
+}
+
+.track-list.is-instant { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .track-list, .track-list.is-collapsed { transition: none; }
+}
+
+.track-list::-webkit-scrollbar { width: 4px; }
+.track-list::-webkit-scrollbar-track { background: transparent; }
+.track-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.15);
+  border-radius: 2px;
+}
+
+@keyframes track-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-1.25rem);
+  }
+}
+
+.track-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: .45rem 1.5rem;
+  gap: 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.65);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: .9rem;
+  border-radius: 8px;
+  transition: background .2s ease-in-out, color .2s ease-in-out,
+              padding .2s ease-in-out, font-size .2s ease-in-out;
+  animation: track-slide-in cubic-bezier(0.1, 0.9, 0.2, 1) backwards;
+}
+
+@media (hover: hover) {
+  .track-item:hover {
+    background: rgba(255,255,255,.06);
+    color: #fff;
+  }
+}
+
+.track-item.is-active {
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  font-weight: 600;
+  padding: .7rem 1.5rem;
+  font-size: .96rem;
+}
+
+.track-num {
+  width: 1.75rem;
+  text-align: right;
+  color: rgba(255,255,255,.35);
+  flex-shrink: 0;
+  font-size: .8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.track-item.is-active .track-num {
+  color: rgba(255,255,255,.65);
+  font-size: .86rem;
+}
+
+.track-artist {
+  color: rgba(255,255,255,.45);
+  font-size: .82rem;
+  flex-shrink: 0;
+  max-width: 35%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-item.is-active .track-artist {
+  color: rgba(255,255,255,.65);
+  font-size: .88rem;
+}
+
+@media (max-width: 640px) {
+  .track-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 82%;
+    max-width: 300px;
+    z-index: 10;
+    background: rgba(15,15,15,.92);
+    backdrop-filter: blur(24px);
+    padding: 1rem .5rem 5rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: none;
+  }
+
+  .track-list.is-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0,0,0,.55);
+  }
+
+  .track-artist { display: none; }
+
+  .track-item { padding: .45rem .75rem .45rem .25rem; }
+  .track-item.is-active { padding: .7rem .75rem .7rem .25rem; }
+}
+</style>

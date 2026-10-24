@@ -1,0 +1,12 @@
+{
+  "notice": {
+    "updated": "Updated {date}",
+    "body": "",
+    "apology": "",
+    "close": "Dismiss notice"
+  },
+  "hero": {
+    "name": "Satou Matsuzaka",
+    "get_in_touch": "Get in Touch"
+  }
+}

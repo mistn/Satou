@@ -1,0 +1,44 @@
+.wrangler
+.eslintcache
+
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Local Claude Code overrides (private MCP configs, etc.)
+CLAUDE.local.md
+
+temp/
+docs/
+archive/
+
+# 音频暂存区：源文件只留在本机，整理后由 tools/music-prep.py 复制进 public/music/
+music-inbox/
+
+# 本地验证用的截图与调试脚本
+.shots/
+
+# 本机构建时的缓存/产物备份
+dist.bak.*
+nuxt.bak.*

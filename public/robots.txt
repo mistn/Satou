@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow:
+
+Sitemap: https://wav.im/sitemap.xml

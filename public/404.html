@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — 松坂砂糖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1a1518;
+      --text-primary: #fcfcfc;
+      --text-secondary: #a8a8a8;
+      --accent: #ee72b2;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Google Sans Flex', sans-serif;
+      overflow: hidden;
+    }
+    /* ambient glow — pink on left, violet on right */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(42% 42% at 24% 48%, rgb(238 114 178 / 0.14), transparent 70%),
+        radial-gradient(55% 55% at 76% 60%, rgb(167 139 250 / 0.10), transparent 72%);
+      pointer-events: none;
+    }
+    .container {
+      position: relative; z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      gap: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+    }
+    .avatar {
+      width: 7rem; height: 7rem;
+      border-radius: 1.25rem;
+      object-fit: cover;
+      border: 2px solid rgb(255 255 255 / 0.5);
+      box-shadow: 0 18px 50px -14px rgb(238 114 178 / 0.55), 0 0 0 1px rgb(0 0 0 / 0.25);
+    }
+    @media (min-width: 640px) {
+      .avatar { width: 9rem; height: 9rem; border-radius: 1.5rem; }
+    }
+    .name {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      letter-spacing: 0.01em;
+      color: var(--text-primary);
+    }
+    .tagline {
+      font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      color: var(--accent);
+    }
+    .quote {
+      font-size: clamp(0.9rem, 1.7vw, 1.05rem);
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    .status {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+      margin-top: 0.5rem;
+    }
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.25);
+      transform: translateY(-1px);
+    }
+    .btn.primary {
+      background: var(--text-primary);
+      color: #1a1518;
+      border-color: var(--text-primary);
+    }
+    .btn.primary:hover {
+      background: #e0e0e0;
+      border-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="/avatar.jpg" alt="松坂砂糖" class="avatar" />
+    <div class="name">松坂砂糖</div>
+    <div class="tagline">HAPPY SUGAR LIFE</div>
+    <div class="quote">Happiness is sweet - and it's all mine.</div>
+    <div class="status">404 — 这个页面不存在</div>
+    <div class="btn-row">
+      <a href="/" class="btn primary">← 回到首页</a>
+      <a href="javascript:history.back()" class="btn">返回上一页</a>
+    </div>
+  </div>
+</body>
+</html>
