@@ -28,13 +28,18 @@ useHead({
   meta: [{ name: 'description', content: '松坂砂糖的私人歌单' }],
 })
 
-const { data: tracks, refresh: refreshTracks } = await useFetch<Track[]>('/api/music', { default: () => [] })
+// 手动管理歌曲列表，避免 useFetch refresh 在开发模式下不稳定导致数据清空
+const tracksData = ref<Track[]>([])
+const { data: fetchedTracks } = await useFetch<Track[]>('/api/music', { default: () => [] })
+tracksData.value = fetchedTracks.value ?? []
+watch(fetchedTracks, (newVal) => {
+  if (newVal && newVal.length > 0) tracksData.value = newVal
+})
+const tracks = computed(() => tracksData.value)
 
 // Player state
 const currentIndex = ref(0)
 const isPlaying = ref(false)
-const refreshArcPct = ref(0)
-const arcActive = ref(false)
 const currentTime = ref(0)
 const duration = ref(0)
 const volume = ref(1)
@@ -344,30 +349,6 @@ function nextTrack() {
   loadAndPlay(idx, isPlaying.value)
 }
 
-let arcRafId: number | null = null
-const ARC_DURATION = 500
-
-function startRefreshArc() {
-  if (arcRafId !== null) return
-  refreshTracks()
-  arcActive.value = true
-  refreshArcPct.value = 0
-  const start = performance.now()
-  function tick(now: number) {
-    const t = Math.min((now - start) / ARC_DURATION, 1)
-    const ratio = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
-    refreshArcPct.value = ratio * 100
-    if (ratio < 1) {
-      arcRafId = requestAnimationFrame(tick)
-    }
-    else {
-      arcRafId = null
-      arcActive.value = false
-      setTimeout(() => { refreshArcPct.value = 0 }, 220)
-    }
-  }
-  arcRafId = requestAnimationFrame(tick)
-}
 
 function randomTrack() {
   const len = tracks.value?.length ?? 0
@@ -492,7 +473,6 @@ onBeforeUnmount(() => {
   if (keyHandler) window.removeEventListener('keydown', keyHandler)
   if (narrowQuery && narrowHandler) narrowQuery.removeEventListener('change', narrowHandler)
   window.removeEventListener('beforeunload', saveState)
-  if (arcRafId !== null) cancelAnimationFrame(arcRafId)
   if (import.meta.client && 'mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('play', null)
     navigator.mediaSession.setActionHandler('pause', null)
@@ -539,14 +519,11 @@ onBeforeUnmount(() => {
         :is-playing="isPlaying"
         :parsed-lyrics="parsedLyrics"
         :current-lyric-index="currentLyricIndex"
-        :arc-active="arcActive"
-        :refresh-arc-pct="refreshArcPct"
         :show-visualizer="showVisualizer"
         :immersive="immersiveActive"
         @toggle-play="togglePlay"
         @seek-to-lyric="seekToLyric"
         @random-track="randomTrack"
-        @start-refresh-arc="startRefreshArc"
         @toggle-visualizer="showVisualizer = !showVisualizer"
         @toggle-immersive="immersive = !immersive"
       />

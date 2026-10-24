@@ -27,8 +27,6 @@ const props = defineProps<{
   isPlaying: boolean
   parsedLyrics: LyricLine[]
   currentLyricIndex: number
-  arcActive: boolean
-  refreshArcPct: number
   showVisualizer: boolean
   /** Two-column layout: cover + title on the left, lyrics on the right. */
   immersive: boolean
@@ -38,7 +36,6 @@ const emit = defineEmits<{
   togglePlay: []
   seekToLyric: [time: number]
   randomTrack: []
-  startRefreshArc: []
   toggleVisualizer: []
   toggleImmersive: []
 }>()
@@ -425,15 +422,6 @@ onBeforeUnmount(() => {
       </button>
       <button
         class="mode-btn"
-        :class="{ 'arc-active': arcActive }"
-        :style="{ '--arc-pct': `${refreshArcPct.toFixed(2)}%` }"
-        title="Refresh playlist"
-        @click="emit('startRefreshArc')"
-      >
-        <Icon name="mdi:refresh" />
-      </button>
-      <button
-        class="mode-btn"
         :class="{ 'mode-btn--on': showVisualizer }"
         :title="showVisualizer ? 'Hide visualizer' : 'Show visualizer'"
         @click="emit('toggleVisualizer')"
@@ -764,32 +752,6 @@ onBeforeUnmount(() => {
   .mode-btn:hover { background: rgba(255,255,255,.22); color: #fff; }
 }
 .mode-btn--on { background: rgba(255,255,255,.22); color: #fff; }
-
-.mode-btn::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  padding: 2px;
-  background: conic-gradient(
-    from 0deg,
-    rgba(255,255,255,.9) var(--arc-pct, 0%),
-    transparent var(--arc-pct, 0%)
-  );
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.mode-btn.arc-active::before { opacity: 1; }
 
 @media (max-width: 640px) {
   .player-panel {
