@@ -19,7 +19,7 @@
         <div class="avatar-frame animate-fadeIn">
           <img
             src="/avatar.jpg"
-            alt="松坂砂糖"
+            alt="松坂さとう"
             width="512"
             height="512"
             class="avatar-img"
@@ -29,9 +29,9 @@
         </div>
 
         <div class="w-full lg:w-auto text-center lg:text-left">
+          <!-- 名字两语言统一用日文原名（en.json 同值），h1 跨语言静态不闪 -->
           <h1
-            class="hero-name animate-fadeInUp"
-            :class="locale === 'zh' ? 'name-cjk' : 'hero-name--latin'"
+            class="hero-name name-cjk animate-fadeInUp"
             style="animation-delay: 0.15s"
           >
             {{ $t('hero.name') }}
@@ -177,19 +177,10 @@ function openMail() {
   font-size: clamp(2.5rem, 6.5vw, 4.5rem);
   font-weight: 700;
   line-height: 1.12;
-  /* .name-cjk sets 0.05em; display sizes read better slightly tighter */
+  /* name-cjk（main.css）定 0.05em；display 尺寸略收紧更耐看 */
   letter-spacing: 0.01em;
   color: #fcfcfc;
   margin-bottom: 1rem;
-}
-
-/* Latin name is 15 characters instead of 4 CJK glyphs, so it needs a smaller
-   ceiling to stay on one line next to the portrait. */
-.hero-name--latin {
-  font-family: "Google Sans Flex", sans-serif;
-  font-weight: 800;
-  letter-spacing: -0.015em;
-  font-size: clamp(2rem, 5vw, 3.25rem);
 }
 
 .hero-subtitle {

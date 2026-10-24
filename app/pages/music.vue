@@ -24,8 +24,8 @@ interface LyricLine {
 }
 
 useHead({
-  title: 'Music — 松坂砂糖',
-  meta: [{ name: 'description', content: '松坂砂糖的私人歌单' }],
+  title: 'Music — 松坂さとう',
+  meta: [{ name: 'description', content: '松坂さとう的私人歌单' }],
 })
 
 // 手动管理歌曲列表，避免 useFetch refresh 在开发模式下不稳定导致数据清空

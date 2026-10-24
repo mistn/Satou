@@ -7,7 +7,7 @@ const statusCode = computed(() => props.error?.status ?? 404)
 const is403 = computed(() => statusCode.value === 403)
 
 useHead({
-  title: computed(() => `${statusCode.value} — 松坂砂糖`),
+  title: computed(() => `${statusCode.value} — 松坂さとう`),
   style: [{ id: 'error-page-overflow', innerHTML: 'html,body{overflow:hidden!important}' }],
   link: [
     {

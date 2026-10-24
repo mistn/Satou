@@ -50,7 +50,7 @@ export default defineNuxtConfig({
 
   site: {
     url: "https://wav.im",
-    name: "松坂砂糖 — Intro"
+    name: "松坂さとう — Intro"
   },
 
   sitemap: {
@@ -61,26 +61,26 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       htmlAttrs: { lang: 'en' },
-      title: '松坂砂糖',
+      title: '松坂さとう',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-        { name: 'description', content: "松坂砂糖 · Happiness is sweet, and it's all mine." },
+        { name: 'description', content: "松坂さとう · Happiness is sweet, and it's all mine." },
         { name: 'author', content: 'satou' },
-        { name: 'keywords', content: '松坂砂糖, satou, developer, technology, coding' },
+        { name: 'keywords', content: '松坂さとう, 松坂砂糖, satou, happy sugar life, developer, coding' },
         { name: 'robots', content: 'index, follow' },
         // If you're planning to deploy your own website, don't forget to replace this!
- 
+
         // Open Graph / Facebook
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: "松坂砂糖" },
-        { property: 'og:description', content: "松坂砂糖 · Happiness is sweet, and it's all mine." },
+        { property: 'og:title', content: "松坂さとう" },
+        { property: 'og:description', content: "松坂さとう · Happiness is sweet, and it's all mine." },
         { property: 'og:image', content: 'https://wav.im/preview.jpg' },
- 
+
         // Twitter
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: "松坂砂糖" },
-        { name: 'twitter:description', content: "松坂砂糖 · Happiness is sweet, and it's all mine." },
+        { name: 'twitter:title', content: "松坂さとう" },
+        { name: 'twitter:description', content: "松坂さとう · Happiness is sweet, and it's all mine." },
         { name: 'twitter:image', content: 'https://wav.im/preview.jpg' }
       ],
       link: [
@@ -92,9 +92,9 @@ export default defineNuxtConfig({
           href: 'https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap&font-display=block'
         },
         {
-          // 名字用的日文字体：text= 只子集「松坂砂糖」四个字，约 1.5KB
+          // 名字用的日文字体：text= 只子集「松坂さとう」（3 汉字 + 2 假名，约 2KB）
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&text=%E6%9D%BE%E5%9D%82%E7%A0%82%E7%B3%96&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&text=%E6%9D%BE%E5%9D%82%E3%81%95%E3%81%A8%E3%81%86&display=swap'
         }
       ],
     }

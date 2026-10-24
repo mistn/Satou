@@ -30,7 +30,7 @@ useHead({
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        'name': '松坂砂糖',
+        'name': '松坂さとう',
         'url': 'https://wav.im'
       })
     }
@@ -38,6 +38,6 @@ useHead({
 })
 
 useSeoMeta({
-  ogSiteName: '松坂砂糖'
+  ogSiteName: '松坂さとう'
 })
 </script>
